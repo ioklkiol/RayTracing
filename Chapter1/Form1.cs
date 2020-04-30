@@ -22,7 +22,7 @@ namespace Chapter1
             int nx = 900;
             int ny = 450;
             Bitmap bmp = new Bitmap(nx, ny);
-            for (int j = 0; j < ny; j++)
+            for (int j = ny-1; j >0; j--)
             {
                 for (int i = 0; i < nx; i++)
                 {
