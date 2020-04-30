@@ -22,12 +22,12 @@ namespace Chapter1
             int nx = 900;
             int ny = 450;
             Bitmap bmp = new Bitmap(nx, ny);
-            for (int j = ny-1; j >0; j--)
+            for (int j = 0; j < ny; j++)
             {
                 for (int i = 0; i < nx; i++)
                 {
                     int r = i * 255 / nx;
-                    int g = j * 255 / ny;
+                    int g = 255-j * 255 / ny;
                     int b = (int)(0.2 * 255);
                     Color color = Color.FromArgb(r, g, b);
                     bmp.SetPixel(i, j, color);
