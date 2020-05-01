@@ -14,7 +14,7 @@ public class HittableList
         this.list = list;
         this.listSize = listSize;
     }
-
+     
     public virtual bool Hit(Ray r, double tMin, double tMax,out HitRecord rec)
     {
         rec = new HitRecord();

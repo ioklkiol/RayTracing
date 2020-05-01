@@ -8,5 +8,5 @@ using System.Threading.Tasks;
 public abstract class Hittable
 {
    public abstract bool Hit(Ray r, double tMin, double tMax,out HitRecord rec);
-}
+} 
 

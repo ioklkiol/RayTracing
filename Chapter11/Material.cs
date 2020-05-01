@@ -15,7 +15,7 @@ public abstract class Material
     {
         Albedo = albedo;
     }
-    protected Material(double ri)
+    protected Material(double ri) 
     {
         RefIdx = ri;
     }

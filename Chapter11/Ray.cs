@@ -17,7 +17,7 @@ public class Ray
     {
         Origin = origin;
         Direction = direction;
-    }
+    } 
     //根据距离得到射线上的点
     public Vector3D GetPoint(double distance)
     {

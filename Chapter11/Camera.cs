@@ -29,7 +29,7 @@ public class Camera
         v = Vector3D.Cross(w, u);
 
         lowerLeft = origin - halfWidth * u - halfHeight * v - w;
-        horizontal = 2*halfWidth*u;
+        horizontal = 2*halfWidth*u; 
         vertical = 2*halfHeight*v;
     }
     public Camera()

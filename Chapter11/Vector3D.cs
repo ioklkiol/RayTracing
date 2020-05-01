@@ -19,7 +19,7 @@ public class Vector3D
     {
         X = x;
         Y = y;
-        Z = z;
+        Z = z; 
     }
     //规范化向量
     public void Normalize()

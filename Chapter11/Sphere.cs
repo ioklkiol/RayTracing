@@ -18,7 +18,7 @@ public class Sphere : Hittable
     public Sphere(Vector3D cen, double r,Material m)
     {
         Center = cen;
-        Radius = r;
+        Radius = r; 
         MatPtr = m;
     }
   
