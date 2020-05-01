@@ -62,7 +62,7 @@ namespace Chapter11
             }
         }
     
-        private void Form1_Load(object sender, EventArgs e)
+        private void Form1_Load(object sender, EventArgs e) 
         {
             int nx = 200;
             int ny = 100;
