@@ -53,7 +53,7 @@ namespace Chapter4
                     Ray ray = new Ray(origin, lowerLeft + u * horizontal + v * vertical);
                     Vector3D p = ray.GetPoint(2);
                     Vector3D color = GetColor(ray, world);    
-                    int r = (int)(255 * color.X);
+                    int r = (int)(255 * color.X);  
                     int g = (int)(255 * color.Y);
                     int b = (int)(255 * color.Z);
                     bmp.SetPixel(i, j, Color.FromArgb(r, g, b));   //如果之前没有将判别式除以4的话这里会报错，则需要限定一下边界，
