@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Chapter6
+namespace Chapter7
 {
     public partial class Form1 : Form
     {
@@ -38,14 +38,22 @@ namespace Chapter6
             return p;
         }
 
-        private Vector3D GetColor(Ray r, HittableList world)
+        private Vector3D GetColor(Ray r, HittableList world,int depth)
         {
             HitRecord rec;
-            if (world.Hit(r, 0.0000001, double.MaxValue, out rec))
+            if (world.Hit(r, 0.001, double.MaxValue, out rec))
             {
-                Vector3D target = rec.p + rec.normal + RandomInUnitShpere( );   //击中点加法线向量得到击中点单位球的球心，球心加上
-                                                                                //随机向量得到反射的方向。
-                return 0.5 * GetColor(new Ray(rec.p, target - rec.p), world);   //每次碰撞都使光线强度减半
+                Ray scattered;
+                Vector3D attenuation;
+                if (depth < 50 && rec.matPtr.Scatter(r, rec, out attenuation, out scattered))   //只递归50次，避免无谓的性能浪费
+                {
+                    Vector3D color = GetColor(scattered, world, depth + 1);      //每次光线衰减之后深度加一
+                    return new Vector3D(attenuation.X * color.X, attenuation.Y * color.Y, attenuation.Z * color.Z);
+                }
+                else
+                {
+                    return new Vector3D(0, 0, 0);
+                }
             }
             else
             {
@@ -59,8 +67,8 @@ namespace Chapter6
         {
             int nx = 200;
             int ny = 100;
-            int ns = 100;                         //设置采样率抗锯齿，但渲染所需要的时间也变长了，获得随机数使用了大量时间,
-                                                  //有时间的话可以优化一下函数RandomDouble
+            int ns = 100;                        
+
             Bitmap bmp = new Bitmap(nx, ny);
             Vector3D lowerLeft = new Vector3D(-2, 1, -1);
             Vector3D horizontal = new Vector3D(4, 0, 0);
@@ -68,9 +76,11 @@ namespace Chapter6
             Vector3D origin = new Vector3D(0, 0, 0);
 
             List<Hittable> list = new List<Hittable>();
-            list.Add(new Sphere(new Vector3D(0, 0, -1), 0.5));
-            list.Add(new Sphere(new Vector3D(0, -100.5, -1), 100));
-            HittableList world = new HittableList(list, 2);
+            list.Add(new Sphere(new Vector3D(0, 0, -1), 0.5,new Lambertian(new Vector3D(0.8,0.3,0.3))));
+            list.Add(new Sphere(new Vector3D(0, -100.5, -1), 100, new Lambertian(new Vector3D(0.8, 0.8, 0))));
+            list.Add(new Sphere(new Vector3D(1, 0, -1), 0.5, new Metal(new Vector3D(0.8, 0.6, 0.2),0.3)));
+            list.Add(new Sphere(new Vector3D(-1, 0, -1), 0.5, new Metal(new Vector3D(0.8, 0.8, 0.8),1)));
+            HittableList world = new HittableList(list, list.Count);
             Camera cam = new Camera();
             for (int j = 0; j < ny; j++)
             {
@@ -82,7 +92,7 @@ namespace Chapter6
                         double u = (double)(i+RandomDouble()) / (double)nx;
                         double v = (double)(j+RandomDouble()) / (double)ny;
                         Ray ray = cam.GetRay(u,v);
-                        color += GetColor(ray, world);      //将所有采样点的颜色相加
+                        color += GetColor(ray, world,0);      //将所有采样点的颜色相加
                     }
                     color /= ns;                            //除以采样点的数量得到平均值
                     color = new Vector3D(Math.Sqrt(color.X), Math.Sqrt(color.Y), Math.Sqrt(color.Z));//进行伽马校正
