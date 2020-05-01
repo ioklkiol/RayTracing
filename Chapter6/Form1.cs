@@ -26,7 +26,7 @@ namespace Chapter6
         }
         //在视点单位球中找一个随机点，返回这个点减去球心位置的单位向量，由于我们的视点就是在原点，所以省略了减去球心位置的过程
         //如果视点不在原点的话得到的随机向量会不正确,物体会变形
-        public Vector3D RandomInUnitShpere()
+        public Vector3D RandomInUnitShpere() 
         {
             Vector3D p = new Vector3D();
             do
