@@ -25,7 +25,7 @@ namespace Chapter3
             double c = oc * oc - radius * radius;
             double discriminant = b * b - 4 * a * c;     //当判别式小于零则没有交点，等于零时则相切，
             return discriminant > 0;                     //大于零时说明有两个交点，有两个交点时才能看到
-        }
+        }   
         private Vector3D GetColor(Ray r)
         {
             if (HitSphere(new Vector3D(0, 0, -1), 0.5, r))
